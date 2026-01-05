@@ -34,9 +34,9 @@ try:
     import pynvml
     pynvml_installed = True
     pynvml.nvmlInit()
-except ImportError:
+except BaseException as e:
     pynvml_installed = False
-    print("警告：未安装pynvml库，auto选项将不可用。")
+    print(f"警告：pynvml库初始化失败，auto选项将不可用。错误详情：{e}")
 
 
 def get_gpu_memory_info():
