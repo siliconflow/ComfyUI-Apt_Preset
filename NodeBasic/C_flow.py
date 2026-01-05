@@ -32,14 +32,11 @@ from ..office_unit import ImageUpscaleWithModel,UpscaleModelLoader
 
 try:
     import pynvml
-    try: 
-        pynvml.nvmlInit()
-        pynvml_installed = True
-    except: 
-        pynvml_installed = False
-except ImportError:
+    pynvml_installed = True
+    pynvml.nvmlInit()
+except BaseException as e:
     pynvml_installed = False
-    print("警告：未安装pynvml库，auto选项将不可用。")
+    print(f"警告：pynvml库初始化失败，auto选项将不可用。错误详情：{e}")
 
 
 def get_gpu_memory_info():
