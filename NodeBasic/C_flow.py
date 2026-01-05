@@ -14,7 +14,7 @@ import os
 import inspect
 import nodes
 import comfy.utils
-
+import torch
 
 
 
@@ -29,14 +29,14 @@ from ..office_unit import ImageUpscaleWithModel,UpscaleModelLoader
 
 
 #region----------------lowcpu--------------------------
-
-try:
-    import pynvml
-    pynvml_installed = True
-    pynvml.nvmlInit()
-except BaseException as e:
-    pynvml_installed = False
-    print(f"警告：pynvml库初始化失败，auto选项将不可用。错误详情：{e}")
+if torch.cuda.is_available():
+    try:
+        import pynvml
+        pynvml_installed = True
+        pynvml.nvmlInit()
+    except BaseException as e:
+        pynvml_installed = False
+        print(f"警告：pynvml库初始化失败，auto选项将不可用。错误详情：{e}")
 
 
 def get_gpu_memory_info():
